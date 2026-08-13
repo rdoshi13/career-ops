@@ -1,0 +1,123 @@
+{
+  "name": "Rishabh Doshi",
+  "contact_line": "480-521-4050",
+  "email": {
+    "url": "rishdoshi9@gmail.com",
+    "display": "rishdoshi9@gmail.com"
+  },
+  "linkedin": {
+    "url": "https://www.linkedin.com/in/rishabh-doshi-115812180",
+    "display": "linkedin.com/in/rishabhdoshi9"
+  },
+  "github": {
+    "url": "https://github.com/rdoshi13",
+    "display": "github.com/rdoshi13"
+  },
+  "portfolio": {
+    "url": "https://rishabhdoshi.me",
+    "display": "rishabhdoshi.me"
+  },
+  "education": [
+    {
+      "institution": "Arizona State University",
+      "location": "Tempe, AZ",
+      "degree": "MS Computer Software Engineering",
+      "dates": "May 2025"
+    },
+    {
+      "institution": "Indian Institute of Information Technology Ranchi",
+      "location": "Ranchi, India",
+      "degree": "BS Computer Science Engineering",
+      "dates": "Jun 2020"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Bar Capital Global",
+      "role": "Software Engineer",
+      "location": "Camden, NJ",
+      "dates": "Jun 2026 - Present",
+      "bullets": [
+        "Architected Barcode, a retail-analytics and purchasing platform (React, Vite, Cloudflare Workers, Supabase) for a live dispensary, backfilling 3 years of POS history and automating a daily ingest of 600+ vendor menu items that replaced manual spreadsheet reporting.",
+        "Built a demand-first reorder engine ranking the full vendor catalog by days-of-supply and sales velocity, with category-aware filters and one-click order-form generation across 3 distributors.",
+        "Delivered Bartender, an internal Next.js/TypeScript platform of 12 dashboards, wiring live GA4, Meta Ads, and Search Console feeds and a CRM with HubSpot migration, deduplication, and an access-gated deal room.",
+        "Led a security audit of the production platform that produced 17 severity-ranked findings and caught 26 investor contact records reachable by unauthenticated users in public build bundles; scoped the remediation plan and added CI test gates."
+      ]
+    },
+    {
+      "company": "RoundTechSquare",
+      "role": "Software Engineer Intern",
+      "location": "San Francisco, CA",
+      "dates": "Feb 2025 - May 2025",
+      "bullets": [
+        "Built reusable React + Tailwind components and integrated them with backend APIs, cutting LCP by 40% across the Aligned Rewards platform.",
+        "Developed dashboard flows using React, SWR, and REST/GraphQL endpoints, reducing perceived latency by 50% and improving real-time user interactions.",
+        "Collaborated with backend, product, and design teams to debug API contracts, handle loading/error states, and deliver pixel-perfect UI/UX.",
+        "Improved engineering reliability by adopting Git-flow branching and CI checks for linting/testing, reducing post-merge defects by 30%."
+      ]
+    },
+    {
+      "company": "Whirlwind",
+      "role": "Software Developer",
+      "location": "Vadodara, India",
+      "dates": "Dec 2020 - Dec 2022",
+      "bullets": [
+        "Built and maintained client-facing web applications using JavaScript, HTML5, CSS3, and backend API integrations for reporting and campaign workflows.",
+        "Developed Python/JavaScript automation scripts to process campaign data, reduce manual operations by 30%, and improve reporting reliability.",
+        "Integrated Google Analytics, Facebook Ads, LinkedIn Ads, and Google Tag Manager APIs into internal dashboards, cutting reporting time from hours to minutes."
+      ]
+    },
+    {
+      "company": "VRSSPL",
+      "role": "Android Intern",
+      "location": "Vadodara, India",
+      "dates": "May 2019 - Jul 2019",
+      "bullets": [
+        "Created Android apps (\"Gujarati Lipi\" and \"Color Filler\") using XML and Java, reducing load times by 30%.",
+        "Improved app stability by integrating advanced Android features such as Fragment Lifecycle and Custom Adapters."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Personal Financial Tracker",
+      "context": "React, Express, MongoDB Atlas, Vercel",
+      "dates": "GITHUB_LINK_1",
+      "bullets": [
+        "Built and deployed a full-stack personal finance tracker using React, Express, MongoDB Atlas, and Vercel with production CI/CD from GitHub.",
+        "Added JWT-based authentication and per-user data isolation to secure all transaction CRUD/report endpoints.",
+        "Designed monthly analytics and PDF reporting with category breakdowns and transaction tables, improving usability for both daily tracking and monthly reviews."
+      ]
+    },
+    {
+      "name": "RAG Code Analyzer",
+      "context": "FastAPI, React, Docker, ChromaDB, Ollama, LangChain",
+      "dates": "GITHUB_LINK_2",
+      "bullets": [
+        "Built a local Retrieval-Augmented Generation (RAG) code analyzer (FastAPI, React, Docker) that turns local folders and GitHub repos into a searchable knowledge base.",
+        "Added background ingestion with filtering, language detection, chunking, and SQLite metadata storage.",
+        "Stored persistent embeddings in ChromaDB for fast semantic retrieval and reuse.",
+        "Integrated Ollama + LangChain for semantic search, architecture summaries, and grounded Q&A with file/line citations.",
+        "Built a React dashboard plus an interactive dependency graph to explore files and import relationships."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": "Java, Python, C++, JavaScript (ES6), TypeScript, HTML/CSS"
+    },
+    {
+      "category": "Database",
+      "items": "PostgreSQL, MongoDB, MySQL"
+    },
+    {
+      "category": "Cloud Services",
+      "items": "AWS (DynamoDB, Lambda, SQS), Cloudflare Workers & Pages, Supabase, Vercel"
+    },
+    {
+      "category": "Frameworks/Tools",
+      "items": "React.js, Next.js, React Native, Vue.js, Node.js, Express.js, FastAPI, Spring Boot, Tailwind CSS, Vite, REST, GraphQL, Maven, Git/GitHub, GitHub Actions, CI/CD, Docker, Kubernetes, JIRA, Postman, Protege, SonarQube, Selenium"
+    }
+  ]
+}

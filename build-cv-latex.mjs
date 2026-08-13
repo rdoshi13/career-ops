@@ -50,6 +50,24 @@ function buildProjects(entries) {
   return blocks.join('\n\n');
 }
 
+function buildContactRow(payload) {
+  const icon = (fa, inner) => `\\raisebox{-0.2\\height}\\fa${fa}\\ ${inner}`;
+  const link = (fa, field) => {
+    const url = sanitizeUrl(field?.url || '');
+    if (!url) return null;
+    const display = escapeLatex(field.display || field.url || '');
+    return `\\href{${url}}{${icon(fa, `\\underline{${display}}`)}}`;
+  };
+  const items = [
+    payload.contact_line ? icon('Phone', escapeLatex(payload.contact_line)) : null,
+    link('Envelope', payload.email),
+    link('Linkedin', payload.linkedin),
+    link('Github', payload.github),
+    link('Globe', payload.portfolio),
+  ].filter(Boolean);
+  return items.join(' ~\n        ');
+}
+
 function buildSkills(categories) {
   if (!Array.isArray(categories) || categories.length === 0) return '';
   return categories.map(c => {
@@ -124,22 +142,10 @@ async function main() {
     template = template.replace(/%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROJECTS  %%%%%%%%%%%%%%%%%%%%%%%%%%%%[\s\S]*?(?=%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Technical Skills)/, '');
   }
 
-  const emailUrl = sanitizeUrl(payload.email?.url || '');
-  const emailDisplay = payload.email?.display || emailUrl;
-  const linkedinUrl = sanitizeUrl(payload.linkedin?.url || '');
-  const linkedinDisplay = payload.linkedin?.display || '';
-  const githubUrl = sanitizeUrl(payload.github?.url || '');
-  const githubDisplay = payload.github?.display || '';
 
   const substitutions = {
     NAME: escapeLatex(payload.name || ''),
-    CONTACT_LINE: escapeLatex(payload.contact_line || ''),
-    EMAIL_URL: emailUrl,
-    EMAIL_DISPLAY: escapeLatex(emailDisplay),
-    LINKEDIN_URL: linkedinUrl,
-    LINKEDIN_DISPLAY: escapeLatex(linkedinDisplay),
-    GITHUB_URL: githubUrl,
-    GITHUB_DISPLAY: escapeLatex(githubDisplay),
+    CONTACT_ROW: buildContactRow(payload),
     EDUCATION: buildEducation(payload.education),
     EXPERIENCE: buildExperience(payload.experience),
     PROJECTS: buildProjects(payload.projects),
@@ -241,22 +247,9 @@ async function runSelfTest() {
 
   let template = await readFile(TEMPLATE_PATH, 'utf-8');
 
-  const emailUrl = sanitizeUrl(sample.email?.url || '');
-  const emailDisplay = sample.email?.display || emailUrl;
-  const linkedinUrl = sanitizeUrl(sample.linkedin?.url || '');
-  const linkedinDisplay = sample.linkedin?.display || '';
-  const githubUrl = sanitizeUrl(sample.github?.url || '');
-  const githubDisplay = sample.github?.display || '';
-
   const substitutions = {
     NAME: escapeLatex(sample.name),
-    CONTACT_LINE: escapeLatex(sample.contact_line),
-    EMAIL_URL: emailUrl,
-    EMAIL_DISPLAY: escapeLatex(emailDisplay),
-    LINKEDIN_URL: linkedinUrl,
-    LINKEDIN_DISPLAY: escapeLatex(linkedinDisplay),
-    GITHUB_URL: githubUrl,
-    GITHUB_DISPLAY: escapeLatex(githubDisplay),
+    CONTACT_ROW: buildContactRow(sample),
     EDUCATION: buildEducation(sample.education),
     EXPERIENCE: buildExperience(sample.experience),
     PROJECTS: buildProjects(sample.projects),
