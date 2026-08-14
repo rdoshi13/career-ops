@@ -1,4 +1,11 @@
 # Personal data (user fills these)
+#
+# data/ and reports/ are symlinks into the private career-ops-data repo
+# (see its link.sh). They must never be committed here: they point outside
+# this repo and would be dangling for anyone who clones the fork. The
+# .gitkeep files upstream tracks inside them are dropped for the same reason.
+/data
+/reports
 
 data/applications.md
 data/applications.db
@@ -66,6 +73,7 @@ config/benchmarks.yml
 portals.yml
 modes/_profile.md
 modes/_custom.md
+article-digest.md
 .update-dismissed
 .update-lock
 .manifesto-noted
