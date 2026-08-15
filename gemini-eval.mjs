@@ -301,10 +301,17 @@ try {
 } catch (err) {
   const sanitizedMsg = (err.message || '').split(apiKey).join('[REDACTED]');
   console.error('❌  Gemini API error:', sanitizedMsg);
-  if (sanitizedMsg.includes('API_KEY')) {
+  // Match on what the error actually says, not on a bare 'rate' substring:
+  // every endpoint URL contains "gene<rate>Content", so the old check fired the
+  // free-tier warning on EVERY error — including 503s, which are Google's
+  // capacity problem and have nothing to do with your quota or your tier.
+  if (sanitizedMsg.includes('API_KEY') || /\b401\b|PERMISSION_DENIED/.test(sanitizedMsg)) {
     console.error('    Check your GEMINI_API_KEY in .env');
-  } else if (sanitizedMsg.includes('quota') || sanitizedMsg.includes('rate')) {
-    console.error('    You may have hit the free-tier rate limit. Wait 60s and retry.');
+  } else if (/\b429\b|RESOURCE_EXHAUSTED|quota/i.test(sanitizedMsg)) {
+    console.error('    Quota or rate limit hit. Wait 60s and retry.');
+  } else if (/\b503\b|high demand|overloaded|UNAVAILABLE/i.test(sanitizedMsg)) {
+    console.error('    Transient capacity error on Google\'s side, not your quota.');
+    console.error('    The pipeline retries these automatically with backoff.');
   }
   process.exit(1);
 }
