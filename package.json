@@ -41,6 +41,8 @@
     "invite-match": "node invite-match.mjs",
     "paste-reply": "node paste-reply.mjs",
     "job-scan": "bash ../career-ops-data/job-scan.sh",
+    "job-scan:quick": "bash ../career-ops-data/job-scan.sh --quick",
+    "job-scan:deep": "bash ../career-ops-data/job-scan.sh --deep",
     "gemini:eval": "node gemini-eval.mjs",
     "gemini:pipeline": "node gemini-pipeline.mjs",
     "ollama:eval": "node ollama-eval.mjs",
