@@ -15,7 +15,8 @@
  *   node gemini-pipeline.mjs --limit 5       # only the first 5 (good for a test)
  *   node gemini-pipeline.mjs --delay 3000    # ms to wait between jobs (default 1500)
  *   node gemini-pipeline.mjs --dry-run       # list what would run, fetch/evaluate nothing
- *   node gemini-pipeline.mjs --keep-going    # don't stop on a failed evaluation (default: keep going)
+ *   node gemini-pipeline.mjs --stop-on-error # halt the batch on the first failed evaluation
+ *                                          # (default: skip it and carry on)
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
@@ -120,7 +121,10 @@ for (let i = 0; i < queue.length; i++) {
     const evalRes = spawnSync('node', ['gemini-eval.mjs', '--file', jdPath], { cwd: ROOT, stdio: 'inherit', env: process.env });
     if (evalRes.status === 0) { ok = true; break; }
     if (attempt < retries) {
-      const backoff = 5000 * attempt; // 5s, 10s, ... — rides out transient 503/429 spikes
+      // Exponential, not linear. Google's 503 "high demand" spikes outlast a
+      // 5/10/15/20s ladder (50s total); doubling gives 5/10/20/40/80 = 155s,
+      // which is the difference between riding out a spike and losing the run.
+      const backoff = 5000 * 2 ** (attempt - 1);
       console.warn(`   ⚠️  Attempt ${attempt}/${retries} failed — retrying in ${backoff / 1000}s...`);
       await sleep(backoff);
     }
@@ -129,7 +133,15 @@ for (let i = 0; i < queue.length; i++) {
   else {
     failed++;
     console.warn(`   ❌  Gave up after ${retries} attempts (left unchecked — re-run to retry).`);
-    if (!args.includes('--keep-going')) { console.error('\nStopping. Re-run to resume, or pass --keep-going to push past failures.'); break; }
+    // Carry on by default. A transient 503 on one job is not a reason to
+    // abandon the other nineteen — and each failure leaves its checkbox
+    // unticked, so a later run retries it for free. The usage block always
+    // documented this as the default; the code did the opposite.
+    if (args.includes('--stop-on-error')) {
+      console.error('\n--stop-on-error: halting. Re-run to resume from here.');
+      break;
+    }
+    console.warn('   ↷  Moving on (left unchecked — a later run retries it).');
   }
   if (i < queue.length - 1) await sleep(delayMs);
 }
